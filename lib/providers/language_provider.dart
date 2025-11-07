@@ -22,7 +22,7 @@ class LanguageProvider extends ChangeNotifier {
   bool get isInitialized => _isInitialized;
 
   // Check if current language is RTL (only Urdu)
-  bool get isRTL => AppConstants.isContentRTL(_currentLanguage);
+  bool get isRTL => AppConstants.isRTL(_currentLanguage);
 
   // Get language name for display
   String get currentLanguageName =>

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-// Import screens (we'll create these next)
-// import '../screens/home/home_screen.dart';
-// import '../screens/book_detail/book_detail_screen.dart';
-// import '../screens/poem_list/poem_list_screen.dart';
-// import '../screens/poem_detail/poem_detail_screen.dart';
+// Import screens
+import '../screens/home/home_screen.dart';
+import '../screens/book_detail/book_detail_screen.dart';
+import '../screens/poem_list/poem_list_screen.dart';
+import '../screens/poem_detail/poem_detail_screen.dart';
+import '../screens/settings/settings_screen.dart';
 // import '../screens/favorites/favorites_screen.dart';
 // import '../screens/user_poems/user_poems_screen.dart';
 // import '../screens/user_poems/create_poem_screen.dart';
@@ -54,11 +55,7 @@ class AppRoutes {
       // ─────────────────────────────────────────────────────────
       case home:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(
-            child: Center(child: Text('Home Screen')),
-          ),
-          // TODO: Replace with actual HomeScreen when created
-          // builder: (_) => const HomeScreen(),
+          builder: (_) => const HomeScreen(),
           settings: settings,
         );
 
@@ -69,11 +66,7 @@ class AppRoutes {
       case bookDetail:
         if (args is int) {
           return MaterialPageRoute(
-            builder: (_) => Placeholder(
-              child: Center(child: Text('Book Detail Screen\nBook ID: $args')),
-            ),
-            // TODO: Replace with actual BookDetailScreen
-            // builder: (_) => BookDetailScreen(bookId: args),
+            builder: (_) => BookDetailScreen(bookId: args),
             settings: settings,
           );
         }
@@ -86,17 +79,11 @@ class AppRoutes {
       case poemList:
         if (args is Map<String, dynamic>) {
           return MaterialPageRoute(
-            builder: (_) => Placeholder(
-              child: Center(
-                child: Text('Poem List Screen\n${args.toString()}'),
-              ),
+            builder: (_) => PoemListScreen(
+              bookId: args['bookId'],
+              sortType: args['sortType'],
+              letter: args['letter'],
             ),
-            // TODO: Replace with actual PoemListScreen
-            // builder: (_) => PoemListScreen(
-            //   bookId: args['bookId'],
-            //   sortType: args['sortType'],
-            //   letter: args['letter'],
-            // ),
             settings: settings,
           );
         }
@@ -109,11 +96,7 @@ class AppRoutes {
       case poemDetail:
         if (args is int) {
           return MaterialPageRoute(
-            builder: (_) => Placeholder(
-              child: Center(child: Text('Poem Detail Screen\nPoem ID: $args')),
-            ),
-            // TODO: Replace with actual PoemDetailScreen
-            // builder: (_) => PoemDetailScreen(poemId: args),
+            builder: (_) => PoemDetailScreen(poemId: args),
             settings: settings,
           );
         }
@@ -191,7 +174,7 @@ class AppRoutes {
       // ─────────────────────────────────────────────────────────
       // SETTINGS SCREEN (Language, font size, etc.)
       // ─────────────────────────────────────────────────────────
-      case settings:
+      case 'settings':
         return MaterialPageRoute(
           builder: (_) => const Placeholder(
             child: Center(child: Text('Settings Screen')),

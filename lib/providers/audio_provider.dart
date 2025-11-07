@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../models/poem.dart';
+import '../models/poem_model.dart';
 
 /// ═══════════════════════════════════════════════════════════════
 /// AUDIO PROVIDER
@@ -56,7 +56,7 @@ class AudioProvider extends ChangeNotifier {
     // Listen to player state changes
     _audioPlayer.onPlayerStateChanged.listen((state) {
       _isPlaying = state == PlayerState.playing;
-      _isLoading = state == PlayerState.buffering;
+      _isLoading = state == PlayerState.disposed;
       notifyListeners();
     });
 

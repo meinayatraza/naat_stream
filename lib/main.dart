@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'utils/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // ← ADD THIS
+import 'dart:io' show Platform;
 
-// We'll create these files next
+// Import files
 import 'config/theme.dart';
 import 'config/routes.dart';
 import 'providers/language_provider.dart';
 import 'providers/audio_provider.dart';
-import 'providers/favorites_provider.dart';
+import 'providers/favourites_provider.dart';
 import 'providers/bookmark_provider.dart';
 import 'providers/auth_provider.dart';
 import 'services/database/database_helper.dart';
@@ -16,11 +19,23 @@ void main() async {
   // STEP 1: Ensure Flutter is initialized
   // This is needed because we're doing async work before runApp()
   WidgetsFlutterBinding.ensureInitialized();
+  print("✅ Flutter initialized");
 
-  // STEP 2: Initialize the database
-  // This creates all tables if they don't exist
-  await DatabaseHelper.instance.database;
+  // 👇👇👇 CRITICAL STEP FOR DESKTOP PLATFORMS 👇👇👇
+  // Initialize database factory based on platform
+  if (!kIsWeb) {
+    // Desktop platforms (Windows, macOS, Linux)
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
 
+    // Initialize database
+    await DatabaseHelper.instance.database;
+  } else {
+    // Running on the web
+    print("⚠️ Running on the web. SQLite is not supported.");
+  }
   // STEP 3: Run the app
   runApp(const MyApp());
 }
@@ -55,7 +70,7 @@ class MyApp extends StatelessWidget {
       // Only content (verses) changes based on language selection
       child: MaterialApp(
         // STEP 6: App Configuration
-        title: AppConstants.appName,
+        title: 'Naat Collection',
         debugShowCheckedModeBanner: false,
 
         // STEP 7: Theme from theme.dart
@@ -85,21 +100,26 @@ TEACHER'S EXPLANATION:
    - It allows data to be accessed anywhere in the app
    - Changes in providers automatically rebuild listening widgets
 
-3. WHY Consumer<LanguageProvider>?
-   - When user changes language, the entire app needs to rebuild
-   - Consumer listens to LanguageProvider and rebuilds MaterialApp
-   - This changes text direction (RTL for Urdu) and triggers translations
+3. IMPORTANT: App UI Language
+   - The entire app interface is ALWAYS in ENGLISH
+   - Menus, buttons, messages = English only
+   - Language selection ONLY affects CONTENT:
+     * Verse text
+     * Translation
+     * Explanation
+     * Book titles
+     * Poet introductions
 
-4. WHY Directionality widget?
-   - Urdu is written right-to-left
-   - This widget changes the entire app's layout direction
-   - English, Hindi, Bangla are LTR (left-to-right)
+4. WHY LanguageProvider then?
+   - It manages which content language to display (ur/en/bn/hi)
+   - When user changes language, only content widgets rebuild
+   - App interface (menus, buttons) stays English
 
 5. WHAT'S NEXT?
    - We'll create the files imported here one by one
-   - Start with config/theme.dart (for colors and fonts)
-   - Then models (to define our data structure)
+   - Start with models (to define our data structure)
    - Then database setup
+   - Then providers
    - Finally screens
 
 ═══════════════════════════════════════════════════════════════

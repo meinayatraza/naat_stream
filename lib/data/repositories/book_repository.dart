@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../../models/book.dart';
+import '../../models/book_model.dart';
 import '../../services/database/database_helper.dart';
 
 /// ═══════════════════════════════════════════════════════════════
