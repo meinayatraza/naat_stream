@@ -12,10 +12,10 @@ class PoetIntroCard extends StatefulWidget {
   final String languageCode;
 
   const PoetIntroCard({
-    Key? key,
+    super.key,
     required this.book,
     required this.languageCode,
-  }) : super(key: key);
+  });
 
   @override
   State<PoetIntroCard> createState() => _PoetIntroCardState();
@@ -51,7 +51,7 @@ class _PoetIntroCardState extends State<PoetIntroCard> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),

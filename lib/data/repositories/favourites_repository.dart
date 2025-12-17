@@ -1,6 +1,4 @@
 import 'package:sqflite/sqflite.dart';
-import '../../models/poem_model.dart';
-import '../../models/verse_model.dart';
 import '../../services/database/database_helper.dart';
 import '../../utils/constants.dart';
 

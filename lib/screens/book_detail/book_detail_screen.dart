@@ -20,9 +20,9 @@ class BookDetailScreen extends StatefulWidget {
   final int bookId;
 
   const BookDetailScreen({
-    Key? key,
+    super.key,
     required this.bookId,
-  }) : super(key: key);
+  });
 
   @override
   State<BookDetailScreen> createState() => _BookDetailScreenState();

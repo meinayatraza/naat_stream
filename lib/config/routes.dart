@@ -5,7 +5,6 @@ import '../screens/home/home_screen.dart';
 import '../screens/book_detail/book_detail_screen.dart';
 import '../screens/poem_list/poem_list_screen.dart';
 import '../screens/poem_detail/poem_detail_screen.dart';
-import '../screens/settings/settings_screen.dart';
 // import '../screens/favorites/favorites_screen.dart';
 // import '../screens/user_poems/user_poems_screen.dart';
 // import '../screens/user_poems/create_poem_screen.dart';
